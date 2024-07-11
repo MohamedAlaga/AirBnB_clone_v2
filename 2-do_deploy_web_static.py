@@ -9,7 +9,7 @@ from datetime import datetime
 import os
 
 
-env.hosts = ['ubuntu@35.175.132.56']
+env.hosts = ['ubuntu@54.157.130.43']
 
 
 def do_deploy(archive_path):
