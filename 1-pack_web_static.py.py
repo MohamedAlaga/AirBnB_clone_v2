@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+""" This module contains the function do_pack that generates a .tgz archive
+  from the contents of the web_static folder (fabric script) """
+
+
 from fabric.api import *
 from datetime import datetime
 
@@ -14,5 +18,3 @@ def do_pack():
         return filename
     else:
         return None
-###connection = Connection(host="35.175.132.56",user="ubuntu",connect_kwargs={"key_filename":[r"/root/.ssh/id_rsa"]})
-###connection.run("whoami")
