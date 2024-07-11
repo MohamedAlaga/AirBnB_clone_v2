@@ -8,7 +8,7 @@ from fabric.operations import run, put
 from datetime import datetime
 import os
 
-env.hosts = ['ubuntu@35.175.132.56','ubuntu@54.157.130.43']
+env.hosts = ['35.175.132.56','54.157.130.43']
 
 def do_pack():
     """ Fabric script that generates a .tgz archive from the contents of the...
