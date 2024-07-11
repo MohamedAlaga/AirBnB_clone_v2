@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#add alias to /hbnb_static
 
 apt-get -y update
 apt-get -y install nginx
