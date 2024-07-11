@@ -55,7 +55,7 @@ def deploy():
     execute both do_pack and do_deploy
     """
     archive = do_pack()
-    if os.path.exists(archive) is False:
+    if exists(archive) is False:
         return False
     dep = do_deploy(archive)
     return dep
