@@ -13,7 +13,8 @@ env.hosts = ['ubuntu@35.175.132.56','ubuntu@54.157.130.43']
 
 
 def do_deploy(archive_path):
-
+    """ distributes an archive to my web servers
+    """
     if not os.path.exists(archive_path):
         return False
     filename = archive_path.split('/')[-1]
