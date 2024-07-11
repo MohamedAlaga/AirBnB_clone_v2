@@ -1,18 +1,19 @@
 #!/usr/bin/python3
-"""
-fab file to deploy web static files to server
-"""
+""" Fabric script (based on the file 2-do_deploy_web_static.py) that creates
+and distributes an archive to your web servers, using the function deploy: """
+
 
 from fabric.api import *
-from fabric.operations import run, put
 from datetime import datetime
-import os
+from os.path import exists
 
-env.hosts = ['ubuntu@35.175.132.56','ubuntu@54.157.130.43']
+
+env.hosts = ['35.175.132.56', '54.157.130.43']
+
 
 def do_pack():
-    """ Fabric script that generates a .tgz archive from the contents of the...
-    ...web_static folder """
+    """generates a .tgz archive from the contents of the web_static folder
+    """
     local("sudo mkdir -p versions")
     date = datetime.now().strftime("%Y%m%d%H%M%S")
     filename = "versions/web_static_{}.tgz".format(date)
@@ -22,26 +23,26 @@ def do_pack():
     else:
         return None
 
+
 def do_deploy(archive_path):
     """ distributes an archive to my web servers
     """
-    if not os.path.exists(archive_path):
-        return False
+    if exists(archive_path) is False:
     filename = archive_path.split('/')[-1]
     no_tgz = '/data/web_static/releases/' + "{}".format(filename.split('.')[0])
     tmp = "/tmp/" + filename
+
     try:
         put(archive_path, "/tmp/")
         run("mkdir -p {}/".format(no_tgz))
         run("tar -xzf {} -C {}/".format(tmp, no_tgz))
         run("rm {}".format(tmp))
-        run("mv -f {}/web_static/* {}/".format(no_tgz, no_tgz))
+        run("mv {}/web_static/* {}/".format(no_tgz, no_tgz))
         run("rm -rf {}/web_static".format(no_tgz))
         run("rm -rf /data/web_static/current")
         run("ln -s {}/ /data/web_static/current".format(no_tgz))
         return True
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    except:
         return False
 
 def deploy():
