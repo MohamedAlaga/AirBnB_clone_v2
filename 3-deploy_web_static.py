@@ -7,7 +7,7 @@ distributes an archive to the web servers
 from fabric.api import env, local, put, run, execute
 from datetime import datetime
 from os.path import exists, isdir
-env.hosts = []
+hosts = ["35.175.132.56", "	54.157.130.43"]
 
 
 def do_pack():
@@ -46,8 +46,8 @@ def do_deploy(archive_path):
 
 def deploy():
     """creates and distributes an archive to the web servers"""
-    archive_path = local(do_pack())
+    archive_path = do_pack()
     if archive_path is None:
         return False
-    execute(do_deploy(archive_path),hosts = ["35.175.132.56", "	54.157.130.43"])
+    execute(do_deploy, archive_path, hosts=env.hosts)
     return True
