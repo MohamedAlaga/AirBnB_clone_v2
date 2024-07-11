@@ -7,7 +7,6 @@ distributes an archive to the web servers
 from fabric.api import env, local, put, run, execute
 from datetime import datetime
 from os.path import exists, isdir
-import os
 
 
 def do_pack():
@@ -19,8 +18,7 @@ def do_pack():
         file_name = "versions/web_static_{}.tgz".format(date)
         local("tar -cvzf {} web_static".format(file_name))
         return file_name
-    except Exception as e:
-        print(f"Failed to pack web_static: {e}")
+    except:
         return None
 
 
@@ -40,10 +38,8 @@ def do_deploy(archive_path):
         run('rm -rf {}{}/web_static'.format(path, no_ext))
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
-        print("New version deployed!")
         return True
-    except Exception as e:
-        print(f"Failed to deploy: {e}")
+    except:
         return False
 
 
@@ -52,9 +48,5 @@ def deploy():
     archive_path = do_pack()
     if archive_path is None:
         return False
-    print(f"web_static packed: {archive_path} -> {os.path.getsize(archive_path)}Bytes")
-    result = execute(do_deploy, archive_path, hosts=["35.175.132.56", "54.157.130.43"])
-    if all(result.values()):
-        return True
-    else:
-        return False
+    execute(do_deploy, archive_path, hosts=["35.175.132.56", "54.157.130.43"])
+    return True
