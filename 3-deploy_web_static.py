@@ -49,6 +49,7 @@ def do_deploy(archive_path):
 
 def deploy():
     """creates and distributes an archive to the web servers"""
+    print("Packing web_static to versions/")
     archive_path = do_pack()
     if archive_path is None:
         return False
