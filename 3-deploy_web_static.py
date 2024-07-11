@@ -48,5 +48,5 @@ def deploy():
     archive_path = do_pack()
     if archive_path is None:
         return False
-    execute(do_deploy, archive_path, hosts=["35.175.132.56", "	54.157.130.43"])
+    execute(do_deploy, archive_path, hosts=["35.175.132.56", "54.157.130.43"])
     return True
