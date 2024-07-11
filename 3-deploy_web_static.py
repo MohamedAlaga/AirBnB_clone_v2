@@ -70,4 +70,4 @@ def deploy():
     if not archive_path:
         return False
     archive_path = list(archive_path.values())[0]
-    return execute(do_deploy, archive_path)
+    return do_deploy (archive_path)
