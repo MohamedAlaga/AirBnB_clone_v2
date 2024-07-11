@@ -12,5 +12,5 @@ mkdir -p /data/web_static/releases/test/
 echo "hello World! HBNB clone" >> /data/web_static/releases/test/index.html
 ln -sf /data/web_static/releases/test/ /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data/
-sed -i '/listen 80 default_server;/a \nlocation /hbnb_static/ { \nalias /data/web_static/current/;\n}' /etc/nginx/sites-available/default
+sed -i '/listen 80 default_server;/a \\tlocation /hbnb_static/ { \n\talias /data/web_static/current/;\n\t}' /etc/nginx/sites-available/default
 service nginx restart
