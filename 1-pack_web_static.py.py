@@ -1,19 +1,18 @@
 #!/usr/bin/python3
-from fabric import api
+from fabric.api import *
 from datetime import datetime
-import os
+
 
 def do_pack():
-    try:
-        if not os.path.exists('versions'):
-            os.makedirs('versions')
-        now = datetime.now()
-        archive_name = 'versions/web_static_{}.tgz'.format(now.strftime("%Y%m%d%H%M%S"))
-        api.local('tar -czvf {} web_static'.format(archive_name))
-        return archive_name
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    """ Fabric script that generates a .tgz archive from the contents of the...
+    ...web_static folder """
+    local("sudo mkdir -p versions")
+    date = datetime.now().strftime("%Y%m%d%H%M%S")
+    filename = "versions/web_static_{}.tgz".format(date)
+    result = local("sudo tar -cvzf {} web_static".format(filename))
+    if result.succeeded:
+        return filename
+    else:
         return None
-
 ###connection = Connection(host="35.175.132.56",user="ubuntu",connect_kwargs={"key_filename":[r"/root/.ssh/id_rsa"]})
 ###connection.run("whoami")
