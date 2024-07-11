@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from fabric.api import local
+from fabric import api
 from datetime import datetime
 import os
 
@@ -9,7 +9,7 @@ def do_pack():
             os.makedirs('versions')
         now = datetime.now()
         archive_name = 'versions/web_static_{}.tgz'.format(now.strftime("%Y%m%d%H%M%S"))
-        local('tar -czvf {} web_static'.format(archive_name))
+        api.local('tar -czvf {} web_static'.format(archive_name))
         return archive_name
     except Exception as e:
         print(f"An error occurred: {e}")
