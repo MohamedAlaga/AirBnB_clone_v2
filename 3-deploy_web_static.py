@@ -40,6 +40,7 @@ def do_deploy(archive_path):
         run('rm -rf {}{}/web_static'.format(path, no_ext))
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
+        print("New version deployed!")
         return True
     except Exception as e:
         print(f"Failed to deploy: {e}")
@@ -54,8 +55,6 @@ def deploy():
     print(f"web_static packed: {archive_path} -> {os.path.getsize(archive_path)}Bytes")
     result = execute(do_deploy, archive_path, hosts=["35.175.132.56", "54.157.130.43"])
     if all(result.values()):
-        print("New version deployed!")
         return True
     else:
-        print("Deployment failed.")
         return False
