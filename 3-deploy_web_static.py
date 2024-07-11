@@ -18,7 +18,8 @@ def do_pack():
         file_name = "versions/web_static_{}.tgz".format(date)
         local("tar -cvzf {} web_static".format(file_name))
         return file_name
-    except:
+    except Exception as e:
+        print(f"Failed to pack web_static: {e}")
         return None
 
 
@@ -39,7 +40,8 @@ def do_deploy(archive_path):
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         return True
-    except:
+    except Exception as e:
+        print(f"Failed to deploy: {e}")
         return False
 
 
@@ -48,5 +50,11 @@ def deploy():
     archive_path = do_pack()
     if archive_path is None:
         return False
-    execute(do_deploy, archive_path, hosts=["35.175.132.56", "54.157.130.43"])
-    return True
+    print(f"web_static packed: {archive_path} -> {os.path.getsize(archive_path)}Bytes")
+    result = execute(do_deploy, archive_path, hosts=["35.175.132.56", "54.157.130.43"])
+    if all(result.values()):
+        print("New version deployed!")
+        return True
+    else:
+        print("Deployment failed.")
+        return False
