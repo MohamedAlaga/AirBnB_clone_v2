@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-
+"""
+fab file to deploy web static files to server
+"""
 
 from fabric.api import *
 from fabric.operations import run, put
@@ -43,6 +45,9 @@ def do_deploy(archive_path):
         return False
 
 def deploy():
+    """
+    execute both do_pack and do_deploy
+    """
     archive = do_pack()
     if path.exists(archive) is False:
         return False
