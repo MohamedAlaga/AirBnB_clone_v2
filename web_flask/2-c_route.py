@@ -20,7 +20,7 @@ def hbnb():
 def c_text(text):
     """ returns HBNB """
     text = text.replace('_', ' ')
-    return 'c {}'.format(text)
+    return 'C {}'.format(text)
 
 
 if __name__ == '__main__':
