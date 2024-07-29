@@ -9,7 +9,8 @@ app = Flask(__name__)
 @app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
 def get_all_states():
     """ returns a template with all states """
-    return render_template('7-states_list.html', states=storage.all("State").values())
+    states = sorted(list(storage.all("State").values()), key=lambda x: x.name)
+    return render_template('7-states_list.html', states=states)
 
 
 @app.teardown_appcontext
